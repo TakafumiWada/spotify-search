@@ -1,24 +1,51 @@
-# spotify-search
+# Spotify Web API を用いた曲名検索
 
-## Project setup
+## 概要
+
+曲を共有するサービスを制作する際などに自由入力で行ってしまうと、英語の大文字、小文字の違いや小さなスペルミスなどで違う曲だと判断されてしまいます。
+
+そういったミスを無くすためには、曲名の一部などをキーワードとして入力してもらい、実際の曲情報を選択させる必要があるかと思います。
+
+今回は SpotifyWebAPI を用いて曲名のキーワード検索を実装します。(もちろん、アルバム名やアーティスト名での検索も可能です。)
+
+## 使い方
+
+### モジュールのインストール
+
 ```
+npm install
+cd functions
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### .env ファイルの作成
+
 ```
-npm run serve
+echo "CLIENT_ID=(CLIENT_IDの値)" >> functions/.env
+echo "CLIENT_SERCRET=(CLIENT_SERCRETの値)" >> functions/.env
 ```
 
-### Compiles and minifies for production
+### firebase.js の作成
+
 ```
-npm run build
+touch src/firebase.js
 ```
 
-### Lints and fixes files
 ```
-npm run lint
+import firebase from "firebase";
+import "firebase/firestore";
+
+const firebaseConfig = {
+  //
+};
+
+firebase.initializeApp(firebaseConfig);
+
+export const functions = firebase.functions();
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### firebase functions をデプロイ
+
+```
+firebase deploy --only functions
+```

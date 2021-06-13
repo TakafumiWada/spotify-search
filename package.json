@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "dotenv": "^10.0.0",
+    "firebase": "^8.6.7",
+    "spotify-web-api-node": "^5.0.2",
     "vue": "^2.6.11"
   },
   "devDependencies": {

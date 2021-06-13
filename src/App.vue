@@ -1,28 +1,50 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>
+      <input type="text" v-model="inputText" />
+      <button v-on:click="search">検索</button>
+    </div>
+    <div>
+      <div
+        v-for="(item, index) in results"
+        v-bind:key="`result:${index}`"
+        class="search-result"
+      >
+        <div>曲名：{{ item.name }}</div>
+        <div>アーティスト名：{{ item.artists[0].name }}</div>
+        <div>
+          <a v-bind:href="item.external_urls.spotify" target="_blank">詳細</a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import { functions } from "@/firebase";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  data() {
+    return {
+      inputText: "",
+      results: [],
+    };
+  },
+  methods: {
+    async search() {
+      const searchSpotify = functions.httpsCallable("searchSpotify");
+      const res = await searchSpotify(this.inputText);
+      const items = res.data.body?.tracks?.items;
+      console.log(items);
+      if (items) this.results = items;
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+.search-result {
+  margin: 10px 0;
 }
 </style>
+>
