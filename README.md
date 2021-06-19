@@ -2,11 +2,11 @@
 
 ## 概要
 
-自由にキーワードを入力し、それにマッチする上位20件の曲名、アーティスト、SpotifyURLを表示。
+自由にキーワードを入力し、それにマッチする上位 20 件の曲名、アーティスト、SpotifyURL を表示。
 
 ## 使い方
 
-(VueやFirebaseの細かいセットアップの方法は省きます)
+(Vue や Firebase の細かいセットアップの方法は省きます)
 
 ### モジュールのインストール
 
@@ -46,4 +46,10 @@ export const functions = firebase.functions();
 
 ```
 firebase deploy --only functions
+```
+
+### ローカルで実行
+
+```
+firebase emulators:start
 ```

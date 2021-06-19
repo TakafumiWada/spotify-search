@@ -9,12 +9,38 @@ const spotifyApi = new SpotifyWebApi({
   clientSecret: clientSecret,
 });
 
-exports.searchSpotify = functions.https.onCall(async (data, context) => {
+exports.searchMusicSpotify = functions.https.onCall(async (data, context) => {
   try {
     const res = await spotifyApi.clientCredentialsGrant();
     const accessToken = res.body["access_token"];
     spotifyApi.setAccessToken(accessToken);
     const result = await spotifyApi.searchTracks(data);
+    console.info(context);
+    return result;
+  } catch (error) {
+    return error;
+  }
+});
+
+exports.searchArtistSpotify = functions.https.onCall(async (data, context) => {
+  try {
+    const res = await spotifyApi.clientCredentialsGrant();
+    const accessToken = res.body["access_token"];
+    spotifyApi.setAccessToken(accessToken);
+    const result = await spotifyApi.searchTracks("artist:" + data);
+    console.info(context);
+    return result;
+  } catch (error) {
+    return error;
+  }
+});
+
+exports.getAudioFeatures = functions.https.onCall(async (data, context) => {
+  try {
+    const res = await spotifyApi.clientCredentialsGrant();
+    const accessToken = res.body["access_token"];
+    spotifyApi.setAccessToken(accessToken);
+    const result = await spotifyApi.getAudioFeaturesForTrack(data);
     console.info(context);
     return result;
   } catch (error) {
